@@ -65,21 +65,6 @@ namespace Blitz.DataAccess
                     i++;
                 }
                               
-                        //foreach (var item in dataTable.Rows)
-            //{
-            //    while (i < dataTable.Rows.Count)
-            //    {
-            //        project.Add(new Project
-            //        {
-            //            Id = Convert.ToInt32(dataTable.Rows[i]["ID"]),
-            //            Name = Convert.ToString(dataTable.Rows[i]["Name"]),
-            //            StartDate = Convert.ToDateTime(dataTable.Rows[i]["StartDate"])
-
-            //        });
-            //        i++;
-            //    }
-
-            //}
             if (project.Count == 0)
             {
                 project.Add(new Project());
@@ -91,25 +76,14 @@ namespace Blitz.DataAccess
         //Add Projects
         public int AddProject(Project p)
         {
-            int i = DBCommon.ExecuteNonQuerySql("insert into project (id,name,startdate) values (10,'Harish','2022-10-25 00:00:00.000')");
-            return i;
+            return DBCommon.ExecuteNonQuerySql("insert into project (id,name,startdate) values (10,'Harish','2022-10-25 00:00:00.000')");
+             
         }
 
         //Delete Projects by id
         int IProjectDAO.DeleteProject(int Id)
         {
-            //using (SqlConnection myConnection = DBCommon.GetConnection())
-            //{
-            //    SqlCommand sqlCmd = new SqlCommand();
-            //    sqlCmd.CommandType = CommandType.Text;
-            //    sqlCmd.CommandText = "delete from Project where Id=@Id";
-            //    sqlCmd.Parameters.AddWithValue("@Id", Id);
-            //    sqlCmd.Connection = myConnection;
-            //    myConnection.Open();
-            //    int rowDeleted = sqlCmd.ExecuteNonQuery();
-            //    return rowDeleted;
-            //    //myConnection.Close();
-            //}
+          
            return DBCommon.ExecuteNonQuerySql("DELETE FROM Project WHERE Id='3'");
         }
 
