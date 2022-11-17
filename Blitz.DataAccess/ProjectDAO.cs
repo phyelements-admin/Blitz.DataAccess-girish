@@ -55,16 +55,17 @@ namespace Blitz.DataAccess
             
                 while (i < dataTable.Rows.Count)
                 {
-                    project.Add(new Project
-                    {
-                        Id = Convert.ToInt32(dataTable.Rows[i]["ID"]),
-                        Name = Convert.ToString(dataTable.Rows[i]["Name"]),
-                        StartDate = Convert.ToDateTime(dataTable.Rows[i]["StartDate"])
+                project.Add(new Project
+                {
+                    Id = Convert.ToInt32(dataTable.Rows[i]["ID"]),
+                    Name = Convert.ToString(dataTable.Rows[i]["Name"]),
+                    StartDate = Convert.ToDateTime(dataTable.Rows[i]["StartDate"])
+                    
 
-                    });
+                }) ;
                     i++;
                 }
-                              
+            Console.WriteLine("hi");
             if (project.Count == 0)
             {
                 project.Add(new Project());

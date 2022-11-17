@@ -17,7 +17,7 @@ namespace Blitz.Api.Controllers
         
         IProjectDAO projectDAO = new ProjectDAO();
         
-        [Route("getAll")]
+        [Route("getall")]
         [HttpGet]
         public List<Project> GetAll()
         {
@@ -33,7 +33,7 @@ namespace Blitz.Api.Controllers
             return projectDAO.GetProjectById(id);
         }
 
-        [Route("addProject")]
+        [Route("addproject")]
         [HttpPost]
         public void AddProject1(Project p) 
         {
@@ -41,7 +41,7 @@ namespace Blitz.Api.Controllers
             //ProjectDAO.AddProject(p);
         }
 
-        [Route("deleteProjects")]
+        [Route("deleteprojects")]
         [HttpDelete]
         public void DeleteProjects(int id) 
         {
@@ -49,7 +49,7 @@ namespace Blitz.Api.Controllers
 
         }
 
-        [Route("updateProjects")]
+        [Route("updateprojects")]
         [HttpPut]
         public void PutProject(Project p)
         {
