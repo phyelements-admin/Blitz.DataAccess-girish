@@ -46,54 +46,83 @@ namespace Blitz.DataAccess
         }
         
         //Get All Projects
-        IEnumerable<Project> IProjectDAO.GetProjects()
+        List<Project> IProjectDAO.GetProjects()
              {
-              List<Project> p1 = new List<Project>();
-              string query = "Select * from Project";
-              using (SqlConnection con = DBCommon.GetConnection())
-              {
-                using (SqlCommand cmd = new SqlCommand(query))
-                {
-                    cmd.Connection = con;
-                    con.Open();
-                    using (SqlDataReader sdr = cmd.ExecuteReader())
-                    {
-                        while (sdr.Read())
-                        {
-                            p1.Add(new Project
-                            {
-                                Id = Convert.ToInt32(sdr["Id"]),
-                                Name = Convert.ToString(sdr["Name"]),
-                                StartDate = Convert.ToDateTime(sdr["StartDate"])
-                            });
-                        }
-                    }
-                    con.Close();
-                }
-              }
+            //List<Project> p1 = new List<Project>();
+            //string query = "Select * from Project";
+            //using (SqlConnection con = DBCommon.GetConnection())
+            //{
+            //  using (SqlCommand cmd = new SqlCommand(query))
+            //  {
+            //      cmd.Connection = con;
+            //      con.Open();
+            //      using (SqlDataReader sdr = cmd.ExecuteReader())
+            //      {
+            //          while (sdr.Read())
+            //          {
+            //              p1.Add(new Project
+            //              {
+            //                  Id = Convert.ToInt32(sdr["Id"]),
+            //                  Name = Convert.ToString(sdr["Name"]),
+            //                  StartDate = Convert.ToDateTime(sdr["StartDate"])
+            //              });
+            //          }
+            //      }
+            //      con.Close();
+            //  }
+            //}
 
-                if (p1.Count == 0)
+            //  if (p1.Count == 0)
+            //  {
+            //      p1.Add(new Project());
+            //  }
+            //  return p1
+            DataTable dataTable= DBCommon.GetResultDataTableBySql("select * from Project");
+            List<Project> project = new List<Project>();
+            int i = 0;
+            foreach (var item in dataTable.Rows)
+            {
+                while (i < dataTable.Rows.Count)
                 {
-                    p1.Add(new Project());
+                    project.Add(new Project
+                    {
+                        Id = Convert.ToInt32(dataTable.Rows[i]["ID"]),
+                        Name = Convert.ToString(dataTable.Rows[i]["Name"]),
+                        StartDate = Convert.ToDateTime(dataTable.Rows[i]["StartDate"])
+
+                    });
+                    i++;
                 }
-                return p1;
+                              
+            }
+            if (project.Count == 0)
+            {
+                project.Add(new Project());
+            }
+
+            return project;
             }
 
         //Add Projects
         public int AddProject(Project p)
         {
-            using (SqlConnection myconnection = DBCommon.GetConnection())
-            {
-                SqlCommand sqlcmd = new SqlCommand("insert into project (id,name,startdate) values (@id,@name,@startdate)", myconnection);
-                sqlcmd.CommandType = CommandType.Text;
-                sqlcmd.Connection = myconnection;
-                sqlcmd.Parameters.AddWithValue("@id", p.Id);
-                sqlcmd.Parameters.AddWithValue("@name", p.Name);
-                sqlcmd.Parameters.AddWithValue("@startdate", p.StartDate);
-                myconnection.Open();
-                int rowinserted = sqlcmd.ExecuteNonQuery();
-                return rowinserted;
-            }
+            //using (SqlConnection myconnection = DBCommon.GetConnection())
+            //{
+            //    SqlCommand sqlcmd = new SqlCommand("insert into project (id,name,startdate) values (@id,@name,@startdate)", myconnection);
+            //    sqlcmd.CommandType = CommandType.Text;
+            //    sqlcmd.Connection = myconnection;
+            //    sqlcmd.Parameters.AddWithValue("@id", p.Id);
+            //    sqlcmd.Parameters.AddWithValue("@name", p.Name);
+            //    sqlcmd.Parameters.AddWithValue("@startdate", p.StartDate);
+            //    myconnection.Open();
+            //    int rowinserted = DBCommon.ExecuteNonQuerySql(sqlcmd.ToString());
+
+            //    //return rowinserted;
+            //    return rowinserted;
+            //}
+           int i = DBCommon.ExecuteNonQuerySql("insert into project (id,name,startdate) values (10,'Harish','2022-10-25 00:00:00.000')");
+            return i;
+
 
         }
 

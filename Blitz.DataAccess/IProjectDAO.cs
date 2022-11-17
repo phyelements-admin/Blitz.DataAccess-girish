@@ -10,7 +10,7 @@ namespace Blitz.DataAccess
 {
     public interface IProjectDAO
     {
-        IEnumerable<Project> GetProjects();
+        List<Project> GetProjects();
         Project GetProjectById(int Id);
         int AddProject(Project p);
         int UpDateProject(Project p);

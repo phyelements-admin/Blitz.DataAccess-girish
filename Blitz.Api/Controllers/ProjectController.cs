@@ -19,7 +19,7 @@ namespace Blitz.Api.Controllers
         
         [Route("getAll")]
         [HttpGet]
-        public IEnumerable<Project> GetAll()
+        public List<Project> GetAll()
         {
             return projectDAO.GetProjects();
 
