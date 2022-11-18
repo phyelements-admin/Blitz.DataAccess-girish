@@ -44,40 +44,73 @@ namespace Blitz.DataAccess
                 }
             }
         }
-        
+
         //Get All Projects
         List<Project> IProjectDAO.GetProjects()
-             {
-            
-            DataTable dataTable= DBCommon.GetResultDataTableBySql("select * from Project");
+        {
+
+            DataTable dataTable = DBCommon.GetResultDataTableBySql("select * from Project");
             List<Project> project = new List<Project>();
             int i = 0;
-            
-                while (i < dataTable.Rows.Count)
-                {
+
+            while (i < dataTable.Rows.Count)
+            {
                 project.Add(new Project
                 {
                     Id = Convert.ToInt32(dataTable.Rows[i]["ID"]),
                     Name = Convert.ToString(dataTable.Rows[i]["Name"]),
                     StartDate = Convert.ToDateTime(dataTable.Rows[i]["StartDate"])
-                    
 
-                }) ;
-                    i++;
-                }
-            Console.WriteLine("hi");
+                });
+                i++;
+            }
+            //foreach (DataRow dataRow in dataTable.Rows)
+            //{
+            //    project.Add(new Project
+            //    {
+            //        Id = Convert.ToInt32(dataRow["Id"])
+
+            //    }) ;
+            //}
+
             if (project.Count == 0)
             {
                 project.Add(new Project());
             }
 
             return project;
-            }
+        }
 
         //Add Projects
         public int AddProject(Project p)
         {
-            return DBCommon.ExecuteNonQuerySql("insert into project (id,name,startdate) values (10,'Harish','2022-10-25 00:00:00.000')");
+            List<SqlParameter> parameters = new List<SqlParameter>();
+
+            parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@Id",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Input,
+                Value = p.Id
+
+            }) ;
+            parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@Name",
+                SqlDbType = SqlDbType.Char,
+                Direction = ParameterDirection.Input,
+                Value =p.Name
+            });
+            //parameters.Add(new SqlParameter()
+            //{
+            //    ParameterName = "@StartDate",
+            //    SqlDbType = SqlDbType.Variant,
+            //    Direction = ParameterDirection.Input,
+                
+            //});
+            string query = "insert into project (id,name,startdate) values (@ID,@Name,'2022-10-25 00:00:00.000')";
+
+            return DBCommon.ExecuteNonQuerySql(query, parameters);
              
         }
 
